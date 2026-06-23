@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>冯婷 - 个人主页</title>
+    <style>
+        :root {
+            --bg: #faf9f7;
+            --text: #2c2416;
+            --text-light: #6b5e4a;
+            --accent: #c79a63;
+            --accent-deep: #a07848;
+            --card-bg: #ffffff;
+            --border: #e8e2d7;
+            --shadow: 0 4px 24px rgba(60, 40, 20, 0.07);
+            --shadow-hover: 0 12px 36px rgba(60, 40, 20, 0.12);
+            --radius: 16px;
+            --transition: 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "PingFang SC", "Noto Sans SC", "Microsoft YaHei", "Helvetica Neue", sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
+        }
+
+        /* 背景装饰 */
+        .bg-decoration {
+            position: fixed;
+            top: -180px;
+            right: -120px;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(199, 154, 99, 0.08) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+            animation: floatBg 8s ease-in-out infinite;
+        }
+        .bg-decoration-2 {
+            position: fixed;
+            bottom: -200px;
+            left: -100px;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(160, 120, 72, 0.06) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+            animation: floatBg 10s ease-in-out infinite reverse;
+        }
+        @keyframes floatBg {
+            0%,
+            100% {
+                transform: translate(0, 0);
+            }
+            33% {
+                transform: translate(30px, -25px);
+            }
+            66% {
+                transform: translate(-20px, 20px);
+            }
+        }
+
+        /* 主容器 */
+        .main-container {
+            position: relative;
+            z-index: 1;
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 50px 28px 80px;
+        }
+
+        /* 头部区域 */
+        .header {
+            text-align: center;
+            padding: 50px 0 40px;
+            position: relative;
+        }
+        .header-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #e0c9a6 0%, #c79a63 40%, #b8874a 100%);
+            margin: 0 auto 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 52px;
+            font-weight: 300;
+            color: #ffffff;
+            letter-spacing: 2px;
+            box-shadow: 0 8px 32px rgba(160, 120, 72, 0.25);
+            position: relative;
+            transition: var(--transition);
+            cursor: default;
+            user-select: none;
+        }
+        .header-avatar::after {
+            content: '';
+            position: absolute;
+            inset: -6px;
+            border-radius: 50%;
+            border: 2px dashed rgba(199, 154, 99, 0.35);
+            animation: rotateDashed 20s linear infinite;
+        }
+        @keyframes rotateDashed {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        .header-avatar:hover {
+            transform: scale(1.06);
+            box-shadow: 0 14px 40px rgba(160, 120, 72, 0.35);
+        }
+        .header h1 {
+            font-size: 2.6rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            margin-bottom: 6px;
+            color: #2c2416;
+        }
+        .header .subtitle {
+            font-size: 1.05rem;
+            color: var(--text-light);
+            font-weight: 400;
+            letter-spacing: 0.08em;
+        }
+        .header .divider-line {
+            width: 50px;
+            height: 3px;
+            background: var(--accent);
+            margin: 18px auto 0;
+            border-radius: 2px;
+        }
+
+        /* 导航标签 */
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 36px;
+        }
+        .nav-tab {
+            padding: 10px 22px;
+            border-radius: 30px;
+            border: 1.5px solid var(--border);
+            background: transparent;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--text-light);
+            transition: var(--transition);
+            letter-spacing: 0.04em;
+            font-family: inherit;
+            white-space: nowrap;
+        }
+        .nav-tab:hover {
+            border-color: var(--accent);
+            color: var(--accent-deep);
+            background: rgba(199, 154, 99, 0.04);
+        }
+        .nav-tab.active {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+            box-shadow: 0 4px 16px rgba(160, 120, 72, 0.3);
+        }
+
+        /* 内容卡片 */
+        .content-section {
+            display: none;
+            animation: fadeSlideIn 0.5s ease;
+        }
+        .content-section.active {
+            display: block;
+        }
+        @keyframes fadeSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(18px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 32px 30px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            transition: var(--transition);
+        }
+        .card:hover {
+            box-shadow: var(--shadow-hover);
+            transform: translateY(-2px);
+        }
+        .card h3 {
+            font-size: 1.25rem;
+            font-weight: 650;
+            margin-bottom: 14px;
+            color: #2c2416;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .card h3 .icon-dot {
+            display: inline-block;
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: var(--accent);
+            flex-shrink: 0;
+        }
+        .card p {
+            color: var(--text-light);
+            font-size: 0.98rem;
+            margin-bottom: 8px;
+        }
+        .card p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* 技能标签 */
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .skill-tag {
+            padding: 7px 16px;
+            border-radius: 20px;
+            background: #faf6f0;
+            color: var(--accent-deep);
+            font-size: 0.88rem;
+            font-weight: 500;
+            border: 1px solid #ede3d4;
+            transition: var(--transition);
+            letter-spacing: 0.03em;
+        }
+        .skill-tag:hover {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+            cursor: default;
+        }
+
+        /* 时间线 */
+        .timeline-item {
+            position: relative;
+            padding-left: 28px;
+            margin-bottom: 22px;
+            border-left: 2px solid #e8e2d7;
+        }
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -7px;
+            top: 6px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--accent);
+            box-shadow: 0 0 0 4px rgba(199, 154, 99, 0.15);
+        }
+        .timeline-item .time-label {
+            font-size: 0.82rem;
+            color: var(--accent-deep);
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            margin-bottom: 2px;
+        }
+        .timeline-item .time-content {
+            font-size: 0.95rem;
+            color: var(--text);
+            font-weight: 500;
+        }
+        .timeline-item .time-desc {
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+
+        /* 作品网格 */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+            gap: 18px;
+            margin-top: 6px;
+        }
+        .portfolio-item {
+            background: #fdfbf8;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        .portfolio-item:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-hover);
+            border-color: #d4c4ab;
+        }
+        .portfolio-img {
+            height: 150px;
+            background: linear-gradient(135deg, #e8d9c3 0%, #d4bfa0 40%, #c9a87c 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.2rem;
+            color: #fff;
+            letter-spacing: 0.06em;
+            font-weight: 300;
+        }
+        .portfolio-info {
+            padding: 16px 18px;
+        }
+        .portfolio-info h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        .portfolio-info span {
+            font-size: 0.82rem;
+            color: var(--text-light);
+        }
+
+        /* 联系链接 */
+        .contact-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            margin-top: 8px;
+        }
+        .contact-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 10px 18px;
+            border-radius: 25px;
+            background: #faf6f0;
+            color: var(--accent-deep);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            border: 1px solid #ede3d4;
+            transition: var(--transition);
+            letter-spacing: 0.03em;
+        }
+        .contact-link:hover {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+            box-shadow: 0 4px 14px rgba(160, 120, 72, 0.3);
+        }
+
+        /* 页脚 */
+        .footer {
+            text-align: center;
+            padding: 30px 0 10px;
+            color: #b8aa94;
+            font-size: 0.82rem;
+            letter-spacing: 0.05em;
+        }
+
+        /* 响应式 */
+        @media (max-width: 640px) {
+            .main-container {
+                padding: 30px 16px 60px;
+            }
+            .header h1 {
+                font-size: 2rem;
+            }
+            .header-avatar {
+                width: 90px;
+                height: 90px;
+                font-size: 38px;
+            }
+            .card {
+                padding: 22px 18px;
+            }
+            .nav-tab {
+                padding: 8px 16px;
+                font-size: 0.85rem;
+            }
+            .portfolio-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+            }
+            .portfolio-img {
+                height: 110px;
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 背景装饰 -->
+    <div class="bg-decoration"></div>
+    <div class="bg-decoration-2"></div>
+
+    <!-- 主容器 -->
+    <div class="main-container">
+
+        <!-- 头部 -->
+        <header class="header">
+            <div class="header-avatar">冯婷</div>
+            <h1>冯 婷</h1>
+            <p class="subtitle">创意设计师 · 生活美学倡导者</p>
+            <div class="divider-line"></div>
+        </header>
+
+        <!-- 导航标签 -->
+        <nav class="nav-tabs" id="navTabs">
+            <button class="nav-tab active" data-section="about">关于我</button>
+            <button class="nav-tab" data-section="experience">经历</button>
+            <button class="nav-tab" data-section="portfolio">作品</button>
+            <button class="nav-tab" data-section="contact">联系</button>
+        </nav>
+
+        <!-- 内容区域 -->
+        <!-- 关于我 -->
+        <section class="content-section active" id="section-about">
+            <div class="card">
+                <h3><span class="icon-dot"></span>个人简介</h3>
+                <p>
+                    你好，我是冯婷，一名热爱生活、专注细节的创意设计师。我始终相信，好的设计源于对生活的深刻理解与细腻感知。
+                </p>
+                <p>
+                    我拥有超过8年的设计行业经验，擅长品牌视觉、空间美学以及数字媒体艺术。在工作中，我追求将东方美学意蕴与现代极简风格相融合，创造出既有温度又有态度的作品。
+                </p>
+                <p>
+                    闲暇时，我喜欢旅行、摄影和手冲咖啡——这些爱好不断滋养着我的创作灵感，让我在快节奏的时代中保持一份从容与敏锐。
+                </p>
+            </div>
+            <div class="card">
+                <h3><span class="icon-dot"></span>专业技能</h3>
+                <div class="skill-tags">
+                    <span class="skill-tag">品牌视觉设计</span>
+                    <span class="skill-tag">UI/UX 设计</span>
+                    <span class="skill-tag">空间陈列美学</span>
+                    <span class="skill-tag">摄影与后期</span>
+                    <span class="skill-tag">插画创作</span>
+                    <span class="skill-tag">设计系统搭建</span>
+                    <span class="skill-tag">Figma</span>
+                    <span class="skill-tag">Adobe Creative Suite</span>
+                    <span class="skill-tag">Blender</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 经历 -->
+        <section class="content-section" id="section-experience">
+            <div class="card">
+                <h3><span class="icon-dot"></span>工作经历</h3>
+                <div class="timeline-item">
+                    <div class="time-label">2022 — 至今</div>
+                    <div class="time-content">高级创意设计师 — 梵境设计工作室</div>
+                    <div class="time-desc">主导多个高端商业空间的美学设计项目，负责从概念到落地的全流程把控。</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="time-label">2019 — 2022</div>
+                    <div class="time-content">品牌视觉设计师 — 云栖文化传播</div>
+                    <div class="time-desc">为超过30个品牌提供视觉升级方案，涵盖LOGO、包装、线上视觉系统。</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="time-label">2016 — 2019</div>
+                    <div class="time-content">平面设计师 — 青岚设计公司</div>
+                    <div class="time-desc">积累了扎实的版式、色彩与印刷工艺基础，参与大型画册与展览视觉设计。</div>
+                </div>
+            </div>
+            <div class="card">
+                <h3><span class="icon-dot"></span>教育背景</h3>
+                <div class="timeline-item">
+                    <div class="time-label">2012 — 2016</div>
+                    <div class="time-content">中国美术学院</div>
+                    <div class="time-desc">视觉传达设计专业 · 本科</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 作品 -->
+        <section class="content-section" id="section-portfolio">
+            <div class="card" style="padding-bottom: 20px;">
+                <h3><span class="icon-dot"></span>精选作品</h3>
+                <div class="portfolio-grid">
+                    <div class="portfolio-item">
+                        <div class="portfolio-img">🌿</div>
+                        <div class="portfolio-info">
+                            <h4>「栖山」茶品牌</h4>
+                            <span>品牌全案设计</span>
+                        </div>
+                    </div>
+                    <div class="portfolio-item">
+                        <div class="portfolio-img">🏛️</div>
+                        <div class="portfolio-info">
+                            <h4>云间美术馆</h4>
+                            <span>空间视觉系统</span>
+                        </div>
+                    </div>
+                    <div class="portfolio-item">
+                        <div class="portfolio-img">📱</div>
+                        <div class="portfolio-info">
+                            <h4>「素记」App</h4>
+                            <span>UI/UX 设计</span>
+                        </div>
+                    </div>
+                    <div class="portfolio-item">
+                        <div class="portfolio-img">📖</div>
+                        <div class="portfolio-info">
+                            <h4>《慢行》摄影集</h4>
+                            <span>书籍装帧设计</span>
+                        </div>
+                    </div>
+                    <div class="portfolio-item">
+                        <div class="portfolio-img">✨</div>
+                        <div class="portfolio-info">
+                            <h4>「流光」珠宝展</h4>
+                            <span>展览视觉设计</span>
+                        </div>
+                    </div>
+                    <div class="portfolio-item">
+                        <div class="portfolio-img">🎨</div>
+                        <div class="portfolio-info">
+                            <h4>个人插画系列</h4>
+                            <span>数字艺术创作</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 联系 -->
+        <section class="content-section" id="section-contact">
+            <div class="card">
+                <h3><span class="icon-dot"></span>联系方式</h3>
+                <p style="margin-bottom:14px;">
+                    如果你对我的作品感兴趣，或者想要合作交流，欢迎通过以下方式联系我。期待与你相遇！
+                </p>
+                <div class="contact-links">
+                    <a href="mailto:fengting@example.com" class="contact-link">📧 邮箱联系</a>
+                    <a href="#" class="contact-link">📱 微信：fengting_design</a>
+                    <a href="#" class="contact-link">📷 小红书：@冯婷</a>
+                    <a href="#" class="contact-link">💼 领英个人主页</a>
+                </div>
+            </div>
+            <div class="card">
+                <h3><span class="icon-dot"></span>所在城市</h3>
+                <p>📍 中国 · 杭州</p>
+                <p style="margin-top:4px;">欢迎约咖啡聊创意 ☕</p>
+            </div>
+        </section>
+
+        <!-- 页脚 -->
+        <footer class="footer">
+            <p>© 2026 冯婷 · 用心设计，让美好发生</p>
+        </footer>
+    </div>
+
+    <!-- JavaScript 交互 -->
+    <script>
+        (function() {
+            const tabs = document.querySelectorAll('.nav-tab');
+            const sections = document.querySelectorAll('.content-section');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const targetSectionId = tab.getAttribute('data-section');
+
+                    // 移除所有active
+                    tabs.forEach(t => t.classList.remove('active'));
+                    sections.forEach(s => s.classList.remove('active'));
+
+                    // 激活当前
+                    tab.classList.add('active');
+                    const targetSection = document.getElementById('section-' + targetSectionId);
+                    if (targetSection) {
+                        targetSection.classList.add('active');
+                        // 触发动画重置
+                        targetSection.style.animation = 'none';
+                        targetSection.offsetHeight; // 强制回流
+                        targetSection.style.animation = 'fadeSlideIn 0.5s ease';
+                    }
+                });
+            });
+
+            // 作品项点击提示
+            const portfolioItems = document.querySelectorAll('.portfolio-item');
+            portfolioItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    const title = item.querySelector('h4')?.textContent || '作品';
+                    alert('✨ 即将展示作品详情：' + title + '\n\n（演示页面，敬请期待完整版）');
+                });
+            });
+
+            // 联系链接中非mailto的阻止默认并提示
+            const contactLinks = document.querySelectorAll('.contact-link');
+            contactLinks.forEach(link => {
+                const href = link.getAttribute('href');
+                if (href === '#' || (!href.startsWith('mailto:') && href !== '#')) {
+                    link.addEventListener('click', function(e) {
+                        if (this.getAttribute('href') === '#') {
+                            e.preventDefault();
+                            const text = this.textContent.trim();
+                            alert('📬 演示页面：' + text + '\n\n实际使用中可替换为真实链接。');
+                        }
+                    });
+                }
+            });
+        })();
+    </script>
+</body>
+</html>
